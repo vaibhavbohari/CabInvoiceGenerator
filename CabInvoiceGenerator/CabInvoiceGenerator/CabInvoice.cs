@@ -32,15 +32,20 @@ namespace CabInvoiceGenerator
                 time = time
             });
         }
-        public double CalculateAggregate()
+        public InvoiceSummary CalculateAggregate()
         {
-            int fare = 0;
-            
+            double fare = 0;
             foreach (Ride ride in rides)
             {
                 fare += CalculateFare(ride.distance, ride.time);
             }
-            return fare;
+            var summary = new InvoiceSummary()
+            {
+                TotalNoOfRides = rides.Count,
+                AvgFare = fare / rides.Count,
+                TotalFare = fare
+            };
+            return summary;
         }
 
 
